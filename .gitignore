@@ -1,0 +1,13 @@
+# Build output
+/build/
+/cmake-build-*/
+/out/
+*.exe
+*.dll
+*.obj
+*.o
+*.pdb
+*.ilk
+.vscode/
+.idea/
+.DS_Store
