@@ -4,7 +4,7 @@ A C++17 desktop application that visualizes how classic pathfinding algorithms e
 
 ## Screenshot
 
-![Pathfinding Studio interface](screenshots/pathfinding-studio.png)
+![Pathfinding Studio — Interactive Algorithm Visualizer](pathfinding-studio.png)
 
 ## Features
 
