@@ -1,101 +1,118 @@
-# Pathfinding Studio
+# Pathfinding Studio — Interactive Algorithm Visualizer
 
-A polished interactive pathfinding visualizer built with **C++17** and **SFML 3**. Explore how BFS, DFS, Dijkstra, and A* search through a grid, compare their results, and build obstacles interactively.
+A C++17 desktop application that visualizes how classic pathfinding algorithms explore a grid and find a route from a start node to a goal node. Built with **SFML 3** and **CMake**.
+
+## Screenshot
+
+![Pathfinding Studio interface](screenshots/pathfinding-studio.png)
 
 ## Features
 
-- **Four algorithms:** Breadth-First Search (BFS), Depth-First Search (DFS), Dijkstra, and A*.
-- **Interactive grid:** click cells to add/remove walls; drag the green start and pink goal markers.
-- **Results dashboard:** explored nodes, path cost, search time, and selected algorithm.
-- **Clear visual states:** walls, explored cells, final path, start, and goal have distinct colors.
-- **Keyboard shortcuts:** run, clear, reset, and switch algorithms without reaching for the mouse.
-- **Separated architecture:** pathfinding logic is independent from SFML rendering.
-- **No bundled dataset or external assets required.** The app tries common Windows fonts automatically.
+- Interactive grid with start and goal nodes.
+- Draw obstacles to create different pathfinding challenges.
+- Compare four search algorithms:
+  - **Breadth-First Search (BFS)** — finds a shortest path when every move has equal cost.
+  - **Depth-First Search (DFS)** — explores deeply before backtracking; it does not guarantee the shortest path.
+  - **Dijkstra's Algorithm** — finds a minimum-cost path for non-negative edge weights.
+  - **A\*** — uses a heuristic to guide the search toward the goal.
+- Results dashboard displaying explored nodes, path cost, search time, and the selected algorithm.
+- Clear search results and reset the grid.
+- Keyboard shortcuts for common actions.
 
-## Controls
+## Built With
 
-| Action | Control |
-|---|---|
-| Run search | `Space` or **RUN SEARCH** |
-| Choose BFS | `1` |
-| Choose DFS | `2` |
-| Choose Dijkstra | `3` |
-| Choose A* | `4` |
-| Clear search visualization (keep walls) | `C` |
-| Reset walls and results | `R` |
-| Add/remove a wall | Left-click a grid cell |
-| Move start or goal | Drag the green or pink cell |
+- C++17
+- SFML 3
+- CMake
+- Ninja (optional build generator)
 
-## Requirements
+## Getting Started
 
-- C++17 compiler
-- CMake 3.20+
-- Ninja (recommended)
-- SFML 3.x (Graphics, Window, System)
+### Requirements
 
-## Build on Windows with MSYS2 UCRT64
+Install a C++17-compatible compiler, CMake, and SFML 3. Ensure SFML is discoverable by CMake in your environment.
 
-Install dependencies from the **MSYS2 UCRT64** terminal:
+### Build
+
+From the project root, configure and build:
 
 ```bash
-pacman -S --needed mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-sfml mingw-w64-ucrt-x86_64-ninja
-```
-
-Open PowerShell in this project folder and configure/build (adjust the MSYS2 path if yours differs):
-
-```powershell
-$env:Path = "C:\msys64\ucrt64\bin;$env:Path"
-cmake -S . -B build -G Ninja `
-  -DCMAKE_CXX_COMPILER=C:/msys64/ucrt64/bin/g++.exe `
-  -DCMAKE_MAKE_PROGRAM=C:/msys64/ucrt64/bin/ninja.exe `
-  -DCMAKE_PREFIX_PATH=C:/msys64/ucrt64
+cmake -S . -B build
 cmake --build build
-.\build\pathfinding_visualizer.exe
 ```
 
-### If using your existing custom tool paths
+Run the executable produced in the `build` directory. The exact executable path depends on your operating system and generator.
 
-If your CMake, Ninja, and compiler are installed in custom folders, use the paths configured on your machine. For example:
+### Windows (project's current toolchain)
+
+If you use the same MSYS2/UCRT64 toolchain configuration as the project setup, run these commands in PowerShell from the project root:
 
 ```powershell
-& "D:\New folder (6)\ucrt64\bin\cmake.exe" -S . -B build -G Ninja `
-  -DCMAKE_CXX_COMPILER=D:/gcc/ucrt64/bin/g++.exe `
-  -DCMAKE_MAKE_PROGRAM="D:/New folder (6)/ucrt64/bin/ninja.exe" `
-  -DCMAKE_PREFIX_PATH="D:/New folder (6)/ucrt64"
+& "D:\New folder (6)\ucrt64\bin\cmake.exe" -S . -B build -G Ninja -DCMAKE_CXX_COMPILER=D:/gcc/ucrt64/bin/g++.exe -DCMAKE_MAKE_PROGRAM="D:/New folder (6)/ucrt64/bin/ninja.exe" -DCMAKE_PREFIX_PATH="D:/New folder (6)/ucrt64"
+
 & "D:\New folder (6)\ucrt64\bin\cmake.exe" --build build
+
 $env:Path = "D:\New folder (6)\ucrt64\bin;D:\gcc\ucrt64\bin;$env:Path"
+
 .\build\pathfinding_visualizer.exe
 ```
 
-## Algorithms at a glance
+Update the paths if your compiler, CMake, Ninja, or SFML installation is in a different location.
 
-| Algorithm | Strategy | Finds a shortest path on this grid? |
-|---|---|---|
-| BFS | FIFO queue | Yes, all moves have equal cost |
-| DFS | LIFO stack | Not guaranteed |
-| Dijkstra | Minimum-distance priority queue | Yes |
-| A* | Distance + Manhattan heuristic | Yes, with this four-directional grid |
+## How to Use
 
-## Project structure
+1. Launch the application.
+2. Choose BFS, DFS, Dijkstra, or A* from the algorithm panel.
+3. Add walls/obstacles to the grid with the mouse.
+4. Press **RUN SEARCH** (or `Space`) to start the search.
+5. Review the explored-node count, path cost, execution time, and displayed route.
+6. Use **CLEAR** (`C`) to clear the current search, or **RESET** (`R`) to reset the grid.
+
+> Note: Exact mouse interactions and keyboard shortcuts may vary slightly depending on the current source implementation.
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|---|---|
+| `Space` | Run search |
+| `1` | Select BFS |
+| `2` | Select DFS |
+| `3` | Select Dijkstra |
+| `4` | Select A* |
+| `C` | Clear search |
+| `R` | Reset grid |
+
+## Project Structure
 
 ```text
 PathfindingVisualizer/
-├── include/
-│   ├── Pathfinder.hpp
-│   └── Visualizer.hpp
-├── src/
-│   ├── main.cpp
-│   ├── Pathfinder.cpp
-│   └── Visualizer.cpp
+├── include/       # Header files
+├── src/           # C++ source files
+├── assets/        # Optional application assets
+├── screenshots/   # README screenshots
 ├── CMakeLists.txt
 ├── .gitignore
 └── README.md
 ```
 
-## Notes
+## What This Project Demonstrates
 
-Search execution is calculated immediately; visited cells and the final path are then displayed together. Search time measures the algorithm's computation, not the rendering time.
+This project provides a visual way to study graph traversal and pathfinding. It helps compare how different algorithms explore a grid and how many nodes they visit before reaching the goal.
 
-## License
+## Future Improvements
 
-MIT
+- Step-by-step animated search with pause and speed controls.
+- Weighted terrain and custom movement costs.
+- Random maze generation.
+- Side-by-side algorithm comparison.
+- Unit tests for pathfinding correctness.
+
+## Author
+
+**Ahmed Osama**
+
+GitHub: [@ahmedosama2321](https://github.com/ahmedosama2321)
+
+---
+
+If you find this project useful, feel free to star the repository.
