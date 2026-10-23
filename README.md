@@ -2,7 +2,7 @@
 
 A C++17 desktop application that visualizes how classic pathfinding algorithms explore a grid and find a route from a start node to a goal node. Built with **SFML 3** and **CMake**.
 
-## Screenshot
+
 
 ![Pathfinding Studio — Interactive Algorithm Visualizer](pathfinding-studio.png)
 
